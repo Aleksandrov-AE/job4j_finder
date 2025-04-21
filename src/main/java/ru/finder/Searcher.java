@@ -1,4 +1,4 @@
-package ru.jo4j_finder;
+package ru.finder;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;

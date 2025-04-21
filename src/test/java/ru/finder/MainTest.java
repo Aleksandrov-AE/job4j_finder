@@ -1,4 +1,4 @@
-package ru.jo4j_finder;
+package ru.finder;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

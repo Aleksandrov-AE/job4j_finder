@@ -1,4 +1,4 @@
-package ru.jo4j_finder;
+package ru.finder;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         ArgsName argsName = ArgsName.of(args);
         valid(argsName);
-        try(BufferedWriter writer = Files.newBufferedWriter(Path.of(argsName.get("o")))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Path.of(argsName.get("o")))) {
             searchFile(argsName).stream().map(Path::toString).forEach(s -> {
                 try {
                     writer.write(s);
@@ -32,25 +32,25 @@ public class Main {
         Predicate<Path> condition;
         String typeSearch = argsName.get("t");
         switch (typeSearch) {
-            case "mask" : {
+
+            case "mask" :
                 String mask = argsName.get("n");
-                String regex = mask.replace("?", "\\?").replace("*", ".*?");
-                condition = p -> p.getFileName().toString().matches(regex);
+                String maskRegex = mask.replace("?", "\\?").replace("*", ".*?");
+                condition = p -> p.getFileName().toString().matches(maskRegex);
                 break;
-            }
-            case "name" : {
+
+            case "name" :
                 String filename = argsName.get("n");
                 condition = p -> p.getFileName().toString().equals(filename);
                 break;
-            }
-            case "regex" : {
+
+            case "regex" :
                 String regex = argsName.get("n");
                 condition = p -> p.getFileName().toString().matches(regex);
                 break;
-            }
-            default: {
+
+            default:
                 throw new IllegalArgumentException("Wrong search type ");
-            }
         }
         Searcher searcher = new Searcher(condition);
         Files.walkFileTree(root, searcher);
